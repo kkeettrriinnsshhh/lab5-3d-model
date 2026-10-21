@@ -1,27 +1,58 @@
+
 <!doctype html>
-<html lang="en">
-  <head>
-    <title>&lt;model-viewer&gt; template</title>
-    <meta charset="utf-8">
-    <meta name="description" content="&lt;model-viewer&gt; template">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" href="./styles.css" rel="stylesheet"/>
-  </head>
-  <body>
-    <!-- <model-viewer> HTML element -->
-    <model-viewer src="0fac0d10232e414e8fe077d9d108747d.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1.07" autoplay auto-rotate camera-orbit="0deg 75deg 3.669m" field-of-view="30deg" exposure="1.05">
-      <div class="progress-bar hide" slot="progress-bar">
-          <div class="update-bar"></div>
-      </div>
-      <button slot="ar-button" id="ar-button">
-          View in your space
-      </button>
-      <div id="ar-prompt">
-          <img src="ar_hand_prompt.png">
-      </div>
-    </model-viewer>  
-    <script src="script.js"></script>
-    <!-- Loads <model-viewer> for browsers: -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js"></script>
-  </body>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Доберман в 3D</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js">
+  </script>
+</head>
+<body>
+
+  <main class="page">
+    <header class="header">
+      <p class="eyebrow">ИНТЕРАКТИВНАЯ 3D-КОЛЛЕКЦИЯ</p>
+      <h1>Доберман в 3D</h1>
+      <p class="subtitle">
+        Рассмотрите реалистичную 3D-модель добермана
+        со всех сторон
+      </p>
+    </header>
+
+    <section class="viewer-card">
+      <model-viewer
+        src="model.glb"
+        alt="Трёхмерная модель добермана"
+        camera-controls
+        auto-rotate
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        shadow-intensity="1.2"
+        shadow-softness="0.8"
+        exposure="1"
+        tone-mapping="neutral"
+        environment-image="neutral">
+
+        <button slot="ar-button" id="ar-button">
+          Посмотреть в AR
+        </button>
+
+      </model-viewer>
+    </section>
+
+    <p class="hint">
+      ↻ Вращайте модель мышью, чтобы рассмотреть её
+      со всех сторон. Для приближения используйте
+      колёсико мыши.
+    </p>
+
+    <footer>
+      Лабораторная работа №5 · Интерактивная 3D-презентация
+    </footer>
+  </main>
+
+</body>
 </html>
