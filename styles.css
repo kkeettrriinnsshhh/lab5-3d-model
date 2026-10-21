@@ -1,126 +1,44 @@
 
-* {
-  box-sizing: border-box;
+/* Кнопки управления анимацией */
+
+.animation-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 28px auto;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(
-      circle at 50% 35%,
-      #17483f 0%,
-      #0b302c 50%,
-      #061c1b 100%
-    );
-  color: #F7F0DF;
+.animation-controls button {
+  padding: 14px 24px;
+  border: 1px solid #C5A46D;
+  border-radius: 14px;
+  background: #193D36;
+  color: #FFF4E6;
   font-family: Arial, sans-serif;
-}
-
-.page {
-  max-width: 1150px;
-  margin: 0 auto;
-  padding: 50px 24px 30px;
-  text-align: center;
-}
-
-.header {
-  margin-bottom: 30px;
-}
-
-.eyebrow {
-  color: #D7B780;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 4px;
-}
-
-h1 {
-  margin: 16px 0;
-  font-size: clamp(42px, 6vw, 72px);
-  font-weight: 800;
-  letter-spacing: -2px;
-}
-
-.subtitle {
-  color: #C7D6CC;
-  font-size: 18px;
-  line-height: 1.7;
-}
-
-.viewer-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 28px;
-  border: 1px solid rgba(215, 183, 128, 0.35);
-  background: #0A2926;
-  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35);
-}
-
-model-viewer {
-  display: block;
-  width: 100%;
-  height: 600px;
-  background:
-    radial-gradient(
-      ellipse at center,
-      #185148 0%,
-      #0A302B 65%,
-      #071E1D 100%
-    );
-}
-
-#ar-button {
-  position: absolute;
-  right: 24px;
-  bottom: 24px;
-  padding: 15px 26px;
-  border: none;
-  border-radius: 30px;
-  background: #D7B780;
-  color: #102D29;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  transition: 0.3s;
 }
 
-#ar-button:hover {
-  background: #F0D5A6;
+.animation-controls button:hover {
+  background: #C5A46D;
+  color: #102E29;
+  transform: translateY(-3px);
 }
 
-.hint {
-  margin: 28px 0;
-  color: #C7D6CC;
-  font-size: 15px;
-}
-
-footer {
-  margin-top: 35px;
-  color: #94ADA3;
-  font-size: 12px;
+.animation-controls button:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 600px) {
-  .page {
-    padding: 28px 12px;
+  .animation-controls {
+    gap: 10px;
   }
 
-  h1 {
-    letter-spacing: -1px;
-  }
-
-  .subtitle {
-    font-size: 15px;
-  }
-
-  model-viewer {
-    height: 450px;
-  }
-
-  #ar-button {
-    right: 15px;
-    bottom: 15px;
-    padding: 12px 18px;
+  .animation-controls button {
+    padding: 12px 16px;
+    font-size: 13px;
   }
 }
