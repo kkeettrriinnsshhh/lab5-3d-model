@@ -1,109 +1,107 @@
-:not(:defined) > * {
-  display: none;
-}
 
-html {
-  height: 100%;
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+  background: #171C22;
+  color: #FFFFFF;
+  font-family: Arial, sans-serif;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 55px 24px 30px;
+  text-align: center;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #DCA76D;
+}
+
+h1 {
+  font-size: clamp(36px, 6vw, 64px);
+  margin: 15px 0;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #B8BEC7;
+}
+
+.viewer-card {
+  background: #303841;
+  border: 1px solid #48515B;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
 model-viewer {
-  width: 100%;
-  height: 90%;
-  background-color: #ffffff;
-}
-
-
-.progress-bar {
   display: block;
-  width: 33%;
-  height: 10%;
-  max-height: 2%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  border-radius: 25px;
-  box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.5), 0px 0px 5px 1px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.progress-bar.hide {
-  visibility: hidden;
-  transition: visibility 0.3s;
-}
-
-.update-bar {
-  background-color: rgba(255, 255, 255, 0.9);
-  width: 0%;
-  height: 100%;
-  border-radius: 25px;
-  float: left;
-  transition: width 0.3s;
+  width: 100%;
+  height: 600px;
+  background: #303841;
 }
 
 #ar-button {
-  background-image: url(ar_icon.png);
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  background-position: 12px 50%;
-  background-color: #fff;
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  bottom: 16px;
-  padding: 0px 16px 0px 40px;
-  font-family: Roboto Regular, Helvetica Neue, sans-serif;
-  font-size: 14px;
-  color:#4285f4;
-  height: 36px;
-  line-height: 36px;
-  border-radius: 18px;
-  border: 1px solid #DADCE0;
+  bottom: 25px;
+  right: 25px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 30px;
+  background: #B77D4E;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
 }
 
-#ar-button:active {
-  background-color: #E8EAED;
+#ar-button:hover {
+  background: #DCA76D;
 }
 
-#ar-button:focus {
-  outline: none;
+.hint {
+  margin: 25px 0;
+  font-size: 15px;
+  color: #B8BEC7;
 }
 
-#ar-button:focus-visible {
-  outline: 1px solid #4285f4;
+footer {
+  margin-top: 35px;
+  font-size: 12px;
+  color: #858F9C;
 }
 
-@keyframes circle {
-  from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
-  to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
-}
+@media (max-width: 600px) {
+  .page {
+    padding: 28px 12px;
+  }
 
-@keyframes elongate {
-  from { transform: translateX(100px); }
-  to   { transform: translateX(-100px); }
-}
+  model-viewer {
+    height: 450px;
+  }
 
-model-viewer > #ar-prompt {
-  position: absolute;
-  left: 50%;
-  bottom: 60px;
-  animation: elongate 2s infinite ease-in-out alternate;
-  display: none;
-}
+  .subtitle {
+    font-size: 15px;
+  }
 
-model-viewer[ar-status="session-started"] > #ar-prompt {
-  display: block;
-}
-
-model-viewer > #ar-prompt > img {
-  animation: circle 4s linear infinite;
+  #ar-button {
+    bottom: 15px;
+    right: 15px;
+    padding: 12px 18px;
+  }
 }
