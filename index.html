@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Дикая грация — кошка в 3D</title>
+  <title>Дикая грация в 3D</title>
   <link rel="stylesheet" href="./styles.css">
 
   <script type="module"
@@ -17,7 +17,7 @@
 
     <header class="header">
       <p class="eyebrow">ИНТЕРАКТИВНАЯ 3D-КОЛЛЕКЦИЯ</p>
-      <h1>Дикая грация</h1>
+      <h1>Дикая грация в 3D</h1>
       <p class="subtitle">
         Познакомьтесь с грациозной кошкой
         в интерактивном 3D-пространстве
@@ -26,19 +26,17 @@
 
     <section class="viewer-card">
       <model-viewer
+        id="cat-model"
         src="7791f88254194c91b6f9365f0c7595da.glb"
         alt="Реалистичная трёхмерная модель кошки"
         camera-controls
         auto-rotate
-        auto-rotate-delay="1500"
-        rotation-per-second="15deg"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
         shadow-intensity="1"
-        shadow-softness="0.9"
         exposure="1"
-        tone-mapping="neutral"
-        environment-image="neutral">
+        animation-name="Untitled"
+        autoplay
+        ar
+        ar-modes="webxr scene-viewer quick-look">
 
         <button slot="ar-button" id="ar-button">
           Посмотреть в AR
@@ -47,15 +45,39 @@
       </model-viewer>
     </section>
 
+    <div class="animation-controls">
+      <button id="play-btn">▶ Запустить анимацию</button>
+      <button id="pause-btn">⏸ Остановить</button>
+      <button id="restart-btn">↻ Повторить</button>
+    </div>
+
     <p class="hint">
-      ↻ Вращайте модель мышью, чтобы рассмотреть
-      кошку со всех сторон
+      Вращайте модель мышью, чтобы рассмотреть её
+      со всех сторон. Для приближения используйте
+      колёсико мыши.
     </p>
 
     <footer>
-      Лабораторная работа №5 · Интерактивная 3D-презентация
+      Лабораторная работа №6 · Интерактивная 3D-анимация
     </footer>
 
   </main>
+
+  <script>
+    const model = document.querySelector('#cat-model');
+
+    document.querySelector('#play-btn').addEventListener('click', () => {
+      model.play();
+    });
+
+    document.querySelector('#pause-btn').addEventListener('click', () => {
+      model.pause();
+    });
+
+    document.querySelector('#restart-btn').addEventListener('click', () => {
+      model.currentTime = 0;
+      model.play();
+    });
+  </script>
 </body>
 </html>
