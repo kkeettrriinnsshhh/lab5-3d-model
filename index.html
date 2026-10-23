@@ -4,30 +4,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Дикая грация в 3D</title>
   <link rel="stylesheet" href="./styles.css">
 
+  <!-- Библиотеки 3D и постобработки -->
+  <script async
+    src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js">
+  </script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@^0.183.0/build/three.module.min.js"
+    }
+  }
+  </script>
+
   <script type="module"
-    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js">
+    src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js">
+  </script>
+
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js">
   </script>
 </head>
 
 <body>
   <main class="page">
 
+    <!-- ЗАГОЛОВОК -->
     <header class="header">
       <p class="eyebrow">ИНТЕРАКТИВНАЯ 3D-КОЛЛЕКЦИЯ</p>
+
       <h1>Дикая грация в 3D</h1>
+
       <p class="subtitle">
         Познакомьтесь с грациозной кошкой
         в интерактивном 3D-пространстве
       </p>
     </header>
 
+    <!-- 3D-МОДЕЛЬ -->
     <section class="viewer-card">
+
       <model-viewer
         id="cat-model"
-        src="7791f88254194c91b6f9365f0c7595da.glb"
+        src="./7791f88254194c91b6f9365f0c7595da.glb"
         alt="Реалистичная трёхмерная модель кошки"
         camera-controls
         auto-rotate
@@ -38,19 +61,105 @@
         ar
         ar-modes="webxr scene-viewer quick-look">
 
+        <!-- ЭФФЕКТЫ ПОСТОБРАБОТКИ -->
+        <effect-composer render-mode="quality">
+
+          <outline-effect
+            id="outline-effect"
+            color="#D7A96B"
+            strength="1.5"
+            smoothing="2"
+            blend-mode="skip">
+          </outline-effect>
+
+          <bloom-effect
+            id="bloom-effect"
+            strength="0.45"
+            threshold="0.85"
+            radius="0.5"
+            blend-mode="skip">
+          </bloom-effect>
+
+          <color-grade-effect
+            id="color-effect"
+            tonemapping="aces_filmic"
+            contrast="0.08"
+            saturation="0.12">
+          </color-grade-effect>
+
+        </effect-composer>
+
+        <!-- КНОПКА AR -->
         <button slot="ar-button" id="ar-button">
           Посмотреть в AR
         </button>
 
       </model-viewer>
+
     </section>
 
+    <!-- УПРАВЛЕНИЕ АНИМАЦИЕЙ -->
     <div class="animation-controls">
-      <button id="play-btn">▶ Запустить анимацию</button>
-      <button id="pause-btn">⏸ Остановить</button>
-      <button id="restart-btn">↻ Повторить</button>
+      <button id="play-btn" type="button">
+        ▶ Запустить анимацию
+      </button>
+
+      <button id="pause-btn" type="button">
+        ⏸ Остановить
+      </button>
+
+      <button id="restart-btn" type="button">
+        ↻ Повторить
+      </button>
     </div>
 
+    <!-- УПРАВЛЕНИЕ ПОСТОБРАБОТКОЙ -->
+    <section class="effects-panel">
+
+      <p class="effects-label">
+        ВИЗУАЛЬНЫЕ ЭФФЕКТЫ
+      </p>
+
+      <h2>Постобработка модели</h2>
+
+      <p class="effects-description">
+        Включайте эффекты, чтобы увидеть,
+        как меняется внешний вид 3D-модели.
+      </p>
+
+      <div class="effects-controls">
+
+        <button
+          id="outline-btn"
+          type="button"
+          aria-pressed="false">
+          Контур: выкл.
+        </button>
+
+        <button
+          id="bloom-btn"
+          type="button"
+          aria-pressed="false">
+          Свечение: выкл.
+        </button>
+
+        <button
+          id="color-btn"
+          type="button"
+          aria-pressed="true"
+          class="active">
+          Цветокоррекция: вкл.
+        </button>
+
+        <button id="reset-effects" type="button">
+          Сбросить эффекты
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- ПОДСКАЗКА -->
     <p class="hint">
       Вращайте модель мышью, чтобы рассмотреть её
       со всех сторон. Для приближения используйте
@@ -58,26 +167,97 @@
     </p>
 
     <footer>
-      Лабораторная работа №6 · Интерактивная 3D-анимация
+      Лабораторная работа №6 ·
+      Анимация и постобработка 3D-модели
     </footer>
 
   </main>
 
   <script>
-    const model = document.querySelector('#cat-model');
+    const model = document.querySelector("#cat-model");
 
-    document.querySelector('#play-btn').addEventListener('click', () => {
-      model.play();
-    });
+    // Управление анимацией
+    document.querySelector("#play-btn")
+      .addEventListener("click", () => {
+        model.play();
+      });
 
-    document.querySelector('#pause-btn').addEventListener('click', () => {
-      model.pause();
-    });
+    document.querySelector("#pause-btn")
+      .addEventListener("click", () => {
+        model.pause();
+      });
 
-    document.querySelector('#restart-btn').addEventListener('click', () => {
-      model.currentTime = 0;
-      model.play();
-    });
+    document.querySelector("#restart-btn")
+      .addEventListener("click", () => {
+        model.currentTime = 0;
+        model.play();
+      });
+
+    // Элементы постобработки
+    const composer =
+      document.querySelector("effect-composer");
+
+    const outline =
+      document.querySelector("#outline-effect");
+
+    const bloom =
+      document.querySelector("#bloom-effect");
+
+    const color =
+      document.querySelector("#color-effect");
+
+    function setEffect(effect, button, enabled) {
+      effect.setAttribute(
+        "blend-mode",
+        enabled ? "default" : "skip"
+      );
+
+      button.classList.toggle("active", enabled);
+      button.setAttribute("aria-pressed", String(enabled));
+
+      composer.queueRender();
+    }
+
+    function addToggle(buttonId, effect, label) {
+      const button = document.getElementById(buttonId);
+
+      button.addEventListener("click", () => {
+        const enabled =
+          button.getAttribute("aria-pressed") !== "true";
+
+        setEffect(effect, button, enabled);
+
+        button.textContent =
+          label + (enabled ? ": вкл." : ": выкл.");
+      });
+    }
+
+    addToggle("outline-btn", outline, "Контур");
+    addToggle("bloom-btn", bloom, "Свечение");
+    addToggle("color-btn", color, "Цветокоррекция");
+
+    // Сброс всех дополнительных эффектов
+    document.querySelector("#reset-effects")
+      .addEventListener("click", () => {
+
+        const outlineButton =
+          document.querySelector("#outline-btn");
+
+        const bloomButton =
+          document.querySelector("#bloom-btn");
+
+        const colorButton =
+          document.querySelector("#color-btn");
+
+        setEffect(outline, outlineButton, false);
+        setEffect(bloom, bloomButton, false);
+        setEffect(color, colorButton, true);
+
+        outlineButton.textContent = "Контур: выкл.";
+        bloomButton.textContent = "Свечение: выкл.";
+        colorButton.textContent = "Цветокоррекция: вкл.";
+      });
   </script>
+
 </body>
 </html>
