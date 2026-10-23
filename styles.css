@@ -1,35 +1,158 @@
 
-/* ПАНЕЛЬ ПОСТОБРАБОТКИ */
+/* ОСНОВНЫЕ ЦВЕТА */
+:root {
+  --bg: #102D28;
+  --bg-light: #1A4037;
+  --gold: #C5A46D;
+  --cream: #FFF4E6;
+  --muted: #C9D5CD;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at top,
+      #285247 0%,
+      #163A32 42%,
+      #0C2924 100%
+    );
+  color: var(--cream);
+  font-family: Arial, sans-serif;
+}
+
+/* ОСНОВНОЙ КОНТЕЙНЕР */
+.page {
+  width: min(94%, 1050px);
+  margin: 0 auto;
+}
+
+/* ЗАГОЛОВОК */
+.header {
+  text-align: center;
+  padding: 55px 15px 32px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+h1 {
+  margin: 18px 0;
+  font-family: Georgia, serif;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: normal;
+  color: var(--cream);
+}
+
+.subtitle {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* КАРТОЧКА С МОДЕЛЬЮ */
+.viewer-card {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid #567267;
+  border-radius: 26px;
+  background: #25473B;
+  box-shadow: 0 22px 55px #00000040;
+}
+
+model-viewer {
+  display: block;
+  width: 100%;
+  height: 580px;
+  background:
+    radial-gradient(
+      ellipse at center,
+      #6E8C72 0%,
+      #395C4A 48%,
+      #18392F 100%
+    );
+  --poster-color: #395C4A;
+}
+
+/* УПРАВЛЕНИЕ АНИМАЦИЕЙ */
+.animation-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 25px 15px;
+}
+
+.animation-controls button {
+  appearance: none;
+  min-height: 46px;
+  padding: 13px 22px;
+  border: 1px solid var(--gold);
+  border-radius: 25px;
+  background: var(--gold);
+  color: #102D28;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.animation-controls button:hover {
+  background: #E0C18B;
+  transform: translateY(-2px);
+}
+
+/* ПАНЕЛЬ ПОСТОБРАБОТКИ */
 .effects-panel {
-  margin: 30px auto 20px;
-  padding: 32px 24px;
-  background: #123B34;
-  border: 1px solid #526B58;
-  border-radius: 24px;
+  margin: 25px 0;
+  padding: 36px 24px;
+  border: 1px solid #567267;
+  border-radius: 26px;
+  background: #163B32;
+  box-shadow: 0 12px 35px #00000025;
   text-align: center;
 }
 
 .effects-label {
-  color: #D7A96B;
+  margin: 0 0 12px;
+  color: var(--gold);
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 3px;
-  margin: 0 0 12px;
 }
 
 .effects-panel h2 {
-  color: #FFF4E6;
-  font-size: 28px;
   margin: 0 0 12px;
+  color: var(--cream);
+  font-family: Georgia, serif;
+  font-size: clamp(27px, 4vw, 38px);
+  font-weight: normal;
 }
 
 .effects-description {
-  color: #D5E0DC;
+  max-width: 600px;
+  margin: 0 auto 26px;
+  color: var(--muted);
   font-size: 15px;
-  line-height: 1.6;
-  margin: 0 auto 25px;
-  max-width: 550px;
+  line-height: 1.7;
 }
 
 .effects-controls {
@@ -40,11 +163,13 @@
 }
 
 .effects-controls button {
-  padding: 13px 20px;
-  background: #193D36;
-  color: #FFF4E6;
-  border: 1px solid #C5A46D;
-  border-radius: 14px;
+  appearance: none;
+  min-height: 45px;
+  padding: 12px 20px;
+  border: 1px solid var(--gold);
+  border-radius: 15px;
+  background: transparent;
+  color: var(--cream);
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: bold;
@@ -53,35 +178,106 @@
 }
 
 .effects-controls button:hover {
-  background: #416356;
+  background: #315B4C;
   transform: translateY(-2px);
 }
 
 .effects-controls button.active {
-  background: #C5A46D;
-  color: #102E29;
+  background: var(--gold);
+  color: #102D28;
 }
 
-.effects-controls button:focus-visible {
-  outline: 3px solid #FFF4E6;
+button:focus-visible {
+  outline: 3px solid var(--cream);
   outline-offset: 3px;
 }
 
+/* ПОДСКАЗКА */
+.hint {
+  margin: 25px auto;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* КНОПКА AR */
+#ar-button {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background: var(--gold);
+  color: #102D28;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ПОДВАЛ */
+footer {
+  padding: 30px 15px 55px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* МОБИЛЬНАЯ ВЕРСИЯ */
 @media (max-width: 600px) {
-  .effects-panel {
-    padding: 26px 14px;
+  .page {
+    width: 94%;
   }
 
-  .effects-panel h2 {
-    font-size: 23px;
+  .header {
+    padding: 38px 10px 26px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  model-viewer {
+    height: 430px;
+  }
+
+  .animation-controls {
+    gap: 10px;
+    padding: 20px 10px;
+  }
+
+  .animation-controls button {
+    padding: 12px 15px;
+    font-size: 12px;
+  }
+
+  .effects-panel {
+    padding: 28px 14px;
   }
 
   .effects-controls {
-    gap: 9px;
+    gap: 10px;
   }
 
   .effects-controls button {
     font-size: 12px;
     padding: 12px 14px;
+  }
+
+  .hint {
+    font-size: 12px;
+  }
+
+  footer {
+    font-size: 11px;
   }
 }
