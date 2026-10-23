@@ -6,90 +6,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Дикая грация в 3D</title>
+  <meta name="description"
+        content="Интерактивная 3D-модель кошки с анимацией и визуальными эффектами">
+
   <link rel="stylesheet" href="./styles.css">
 
-  <!-- Библиотеки 3D и постобработки -->
-  <script async
-    src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js">
-  </script>
-
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@^0.183.0/build/three.module.min.js"
-    }
-  }
-  </script>
-
+  <!-- Библиотека для отображения 3D-модели -->
   <script type="module"
-    src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer-module.min.js">
-  </script>
-
-  <script type="module"
-    src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js">
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.4.0/model-viewer.min.js">
   </script>
 </head>
 
 <body>
+
+  <!-- SVG-ФИЛЬТР ПИКСЕЛИЗАЦИИ -->
+  <svg
+    class="svg-filters"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true">
+
+    <filter id="pixelate"
+            x="0" y="0" width="100%" height="100%"
+            color-interpolation-filters="sRGB">
+
+      <feFlood
+        x="0" y="0"
+        width="12" height="12"
+        flood-color="transparent"
+        result="tile"/>
+
+      <feComposite
+        in="SourceGraphic"
+        in2="tile"
+        operator="in"
+        result="sample"/>
+
+      <feTile in="sample" result="pixels"/>
+
+      <feComposite
+        in="pixels"
+        in2="SourceGraphic"
+        operator="in"/>
+    </filter>
+  </svg>
+
   <main class="page">
 
     <!-- ЗАГОЛОВОК -->
     <header class="header">
-      <p class="eyebrow">ИНТЕРАКТИВНАЯ 3D-КОЛЛЕКЦИЯ</p>
+
+      <p class="eyebrow">
+        ИНТЕРАКТИВНАЯ 3D-КОЛЛЕКЦИЯ
+      </p>
 
       <h1>Дикая грация в 3D</h1>
 
       <p class="subtitle">
         Познакомьтесь с грациозной кошкой
-        в интерактивном 3D-пространстве
+        в интерактивном трёхмерном пространстве
       </p>
+
     </header>
 
-    <!-- 3D-МОДЕЛЬ -->
+    <!-- КАРТОЧКА С 3D-МОДЕЛЬЮ -->
     <section class="viewer-card">
 
       <model-viewer
         id="cat-model"
+
         src="./7791f88254194c91b6f9365f0c7595da.glb"
-        alt="Реалистичная трёхмерная модель кошки"
+
+        alt="Анимированная трёхмерная модель кошки"
+
         camera-controls
         auto-rotate
+        autoplay
+        animation-name="Untitled"
+
         shadow-intensity="1"
         exposure="1"
-        animation-name="Untitled"
-        autoplay
+
+        camera-orbit="0deg 75deg auto"
+        field-of-view="30deg"
+
         ar
         ar-modes="webxr scene-viewer quick-look">
 
-        <!-- ЭФФЕКТЫ ПОСТОБРАБОТКИ -->
-        <effect-composer render-mode="quality">
-
-          <outline-effect
-            id="outline-effect"
-            color="#D7A96B"
-            strength="1.5"
-            smoothing="2"
-            blend-mode="skip">
-          </outline-effect>
-
-          <bloom-effect
-            id="bloom-effect"
-            strength="0.45"
-            threshold="0.85"
-            radius="0.5"
-            blend-mode="skip">
-          </bloom-effect>
-
-          <color-grade-effect
-            id="color-effect"
-            tonemapping="aces_filmic"
-            contrast="0.08"
-            saturation="0.12">
-          </color-grade-effect>
-
-        </effect-composer>
-
-        <!-- КНОПКА AR -->
         <button slot="ar-button" id="ar-button">
           Посмотреть в AR
         </button>
@@ -98,85 +100,123 @@
 
     </section>
 
-    <!-- УПРАВЛЕНИЕ АНИМАЦИЕЙ -->
-    <div class="animation-controls">
-      <button id="play-btn" type="button">
-        ▶ Запустить анимацию
-      </button>
+    <!-- КНОПКИ УПРАВЛЕНИЯ АНИМАЦИЕЙ -->
+    <section class="animation-panel">
 
-      <button id="pause-btn" type="button">
-        ⏸ Остановить
-      </button>
-
-      <button id="restart-btn" type="button">
-        ↻ Повторить
-      </button>
-    </div>
-
-    <!-- УПРАВЛЕНИЕ ПОСТОБРАБОТКОЙ -->
-    <section class="effects-panel">
-
-      <p class="effects-label">
-        ВИЗУАЛЬНЫЕ ЭФФЕКТЫ
+      <p class="panel-label">
+        УПРАВЛЕНИЕ АНИМАЦИЕЙ
       </p>
 
-      <h2>Постобработка модели</h2>
+      <div class="animation-controls">
 
-      <p class="effects-description">
-        Включайте эффекты, чтобы увидеть,
-        как меняется внешний вид 3D-модели.
-      </p>
-
-      <div class="effects-controls">
-
-        <button
-          id="outline-btn"
-          type="button"
-          aria-pressed="false">
-          Контур: выкл.
+        <button id="play-btn" type="button">
+          ▶ Запустить
         </button>
 
-        <button
-          id="bloom-btn"
-          type="button"
-          aria-pressed="false">
-          Свечение: выкл.
+        <button id="pause-btn" type="button">
+          ⏸ Остановить
         </button>
 
-        <button
-          id="color-btn"
-          type="button"
-          aria-pressed="true"
-          class="active">
-          Цветокоррекция: вкл.
-        </button>
-
-        <button id="reset-effects" type="button">
-          Сбросить эффекты
+        <button id="restart-btn" type="button">
+          ↻ Повторить
         </button>
 
       </div>
 
     </section>
 
+    <!-- ПАНЕЛЬ ПОСТОБРАБОТКИ -->
+    <section class="effects-panel">
+
+      <p class="panel-label">
+        ВИЗУАЛЬНЫЕ ЭФФЕКТЫ
+      </p>
+
+      <h2>Постобработка модели</h2>
+
+      <p class="effects-description">
+        Выберите эффект и посмотрите,
+        как изменится внешний вид 3D-модели.
+      </p>
+
+      <div class="effects-controls">
+
+        <button
+          class="effect-btn active"
+          data-effect="normal"
+          type="button">
+          Обычный
+        </button>
+
+        <button
+          class="effect-btn"
+          data-effect="pixel"
+          type="button">
+          Пиксели
+        </button>
+
+        <button
+          class="effect-btn"
+          data-effect="gray"
+          type="button">
+          Чёрно-белый
+        </button>
+
+        <button
+          class="effect-btn"
+          data-effect="invert"
+          type="button">
+          Инверсия
+        </button>
+
+        <button
+          class="effect-btn"
+          data-effect="blur"
+          type="button">
+          Размытие
+        </button>
+
+        <button
+          class="effect-btn"
+          data-effect="contrast"
+          type="button">
+          Контраст
+        </button>
+
+        <button
+          class="effect-btn"
+          data-effect="sepia"
+          type="button">
+          Сепия
+        </button>
+
+      </div>
+
+      <p id="effect-status" class="effect-status">
+        Сейчас выбран обычный режим.
+      </p>
+
+    </section>
+
     <!-- ПОДСКАЗКА -->
     <p class="hint">
-      Вращайте модель мышью, чтобы рассмотреть её
-      со всех сторон. Для приближения используйте
-      колёсико мыши.
+      Вращайте модель мышью и приближайте
+      колёсиком. Выберите эффект, чтобы
+      изменить изображение.
     </p>
 
     <footer>
-      Лабораторная работа №6 ·
+      Лабораторная работа № 6 ·
       Анимация и постобработка 3D-модели
     </footer>
 
   </main>
 
   <script>
+    // 3D-МОДЕЛЬ
     const model = document.querySelector("#cat-model");
 
-    // Управление анимацией
+    // УПРАВЛЕНИЕ АНИМАЦИЕЙ
     document.querySelector("#play-btn")
       .addEventListener("click", () => {
         model.play();
@@ -193,70 +233,78 @@
         model.play();
       });
 
-    // Элементы постобработки
-    const composer =
-      document.querySelector("effect-composer");
+    // ВИЗУАЛЬНЫЕ ЭФФЕКТЫ
+    const effectButtons =
+      document.querySelectorAll(".effect-btn");
 
-    const outline =
-      document.querySelector("#outline-effect");
+    const status =
+      document.querySelector("#effect-status");
 
-    const bloom =
-      document.querySelector("#bloom-effect");
+    const effects = {
+      normal: {
+        filter: "none",
+        text: "Сейчас выбран обычный режим."
+      },
 
-    const color =
-      document.querySelector("#color-effect");
+      pixel: {
+        filter: "url(#pixelate)",
+        text: "Включена пикселизация."
+      },
 
-    function setEffect(effect, button, enabled) {
-      effect.setAttribute(
-        "blend-mode",
-        enabled ? "default" : "skip"
-      );
+      gray: {
+        filter: "grayscale(100%)",
+        text: "Включён чёрно-белый режим."
+      },
 
-      button.classList.toggle("active", enabled);
-      button.setAttribute("aria-pressed", String(enabled));
+      invert: {
+        filter: "invert(100%)",
+        text: "Включена инверсия цветов."
+      },
 
-      composer.queueRender();
+      blur: {
+        filter: "blur(6px)",
+        text: "Включено размытие."
+      },
+
+      contrast: {
+        filter: "contrast(220%) saturate(170%)",
+        text: "Усилены контрастность и насыщенность."
+      },
+
+      sepia: {
+        filter: "sepia(100%)",
+        text: "Включён эффект старой фотографии."
+      }
+    };
+
+    function applyEffect(effectName) {
+      const effect = effects[effectName];
+
+      if (!effect) return;
+
+      model.style.filter = effect.filter;
+      status.textContent = effect.text;
+
+      effectButtons.forEach(button => {
+        const isActive =
+          button.dataset.effect === effectName;
+
+        button.classList.toggle("active", isActive);
+
+        button.setAttribute(
+          "aria-pressed",
+          String(isActive)
+        );
+      });
     }
 
-    function addToggle(buttonId, effect, label) {
-      const button = document.getElementById(buttonId);
-
+    effectButtons.forEach(button => {
       button.addEventListener("click", () => {
-        const enabled =
-          button.getAttribute("aria-pressed") !== "true";
-
-        setEffect(effect, button, enabled);
-
-        button.textContent =
-          label + (enabled ? ": вкл." : ": выкл.");
+        applyEffect(button.dataset.effect);
       });
-    }
+    });
 
-    addToggle("outline-btn", outline, "Контур");
-    addToggle("bloom-btn", bloom, "Свечение");
-    addToggle("color-btn", color, "Цветокоррекция");
-
-    // Сброс всех дополнительных эффектов
-    document.querySelector("#reset-effects")
-      .addEventListener("click", () => {
-
-        const outlineButton =
-          document.querySelector("#outline-btn");
-
-        const bloomButton =
-          document.querySelector("#bloom-btn");
-
-        const colorButton =
-          document.querySelector("#color-btn");
-
-        setEffect(outline, outlineButton, false);
-        setEffect(bloom, bloomButton, false);
-        setEffect(color, colorButton, true);
-
-        outlineButton.textContent = "Контур: выкл.";
-        bloomButton.textContent = "Свечение: выкл.";
-        colorButton.textContent = "Цветокоррекция: вкл.";
-      });
+    applyEffect("normal");
   </script>
 
 </body>
